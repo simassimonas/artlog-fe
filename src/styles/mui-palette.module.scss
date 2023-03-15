@@ -1,0 +1,7 @@
+@import './_variables.scss';
+
+:export {
+  primary: $primary-color;
+  secondary: $secondary-color;
+  error: $error-color;
+}

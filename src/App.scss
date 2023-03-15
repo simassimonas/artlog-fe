@@ -1,5 +1,22 @@
+@import './styles/breakpoints.scss';
+
 .App {
   text-align: center;
+}
+
+.feed {
+  display: flex;
+  justify-content: center;
+
+  &__block {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+
+    @include tablet {
+      width: 100%;
+    }
+  }
 }
 
 .App-logo {

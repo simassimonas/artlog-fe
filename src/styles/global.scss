@@ -1,0 +1,32 @@
+@import './_variables.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $background-color;
+  font-family: Open-Sans, Helvetica, Sans-Serif;
+}
+
+.action-button {
+  padding: 10px;
+  border: none;
+  background-color: $primary-color;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.icon-text-button {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+
+  &:active {
+    color: inherit;
+  }
+}

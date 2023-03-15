@@ -1,0 +1,48 @@
+@import '../../styles/variables';
+
+.register {
+  height: 100vh;
+  background-color: rgb(193, 190, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 50px;
+    width: 250px;
+
+    @media (max-width: 991px) {
+      width: 70%;
+      padding: 20px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    border-radius: 10px;
+
+    input {
+      border: none;
+      border-bottom: 1px solid lightgray;
+      padding: 20px 10px;
+    }
+
+    button {
+      width: 50%;
+    }
+  }
+
+  form + span {
+    font-size: 0.8em;
+    margin-top: 30px;
+  }
+}

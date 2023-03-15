@@ -1,0 +1,83 @@
+@import '../../styles/variables';
+@import '../../styles/breakpoints.scss';
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid lightgrey;
+  background-color: $background-color;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  @include mobile {
+    justify-content: center;
+  }
+
+  &__left {
+    display: flex;
+
+    @include mobile {
+      flex: 1;
+    }
+
+    span {
+      font-weight: bold;
+      font-size: 20px;
+      color: $primary-color;
+    }
+  }
+
+  &__middle {
+    display: flex;
+    align-items: center;
+
+    @include mobile {
+      flex: 2;
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    @include mobile {
+      flex: 1;
+    }
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    span {
+      max-width: 300px;
+      overflow: hidden;
+      white-space: nowrap;
+
+      @include tablet {
+        display: none;
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+
+    &:active {
+      color: inherit !important;
+    }
+  }
+}
