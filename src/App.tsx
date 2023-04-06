@@ -16,28 +16,32 @@ import { theme } from './styles/mui-theme';
 import { ThemeProvider } from '@mui/material/styles';
 import { useContext } from 'react';
 import { AuthContext } from './context/auth.context';
+import Posting from './pages/posting/posting';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function App() {
-  const { user } = useContext(AuthContext);
-
   const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+    const { user } = useContext(AuthContext);
     if (!user) {
       return <Navigate to="/login" />;
     }
-
     return children;
   };
 
+  const queryClient = new QueryClient();
+
   const Layout = () => {
     return (
-      <div>
-        <Navbar />
-        <div className="feed">
-          <div className="feed__block">
-            <Outlet />
+      <QueryClientProvider client={queryClient}>
+        <div>
+          <Navbar />
+          <div className="feed">
+            <div className="feed__block">
+              <Outlet />
+            </div>
           </div>
         </div>
-      </div>
+      </QueryClientProvider>
     );
   };
 
@@ -65,6 +69,10 @@ function App() {
         {
           path: '/profile/:id',
           element: <Profile />,
+        },
+        {
+          path: '/posting',
+          element: <Posting />,
         },
       ],
     },

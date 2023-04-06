@@ -1,13 +1,37 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext, IUserContextInterface } from '../../context/auth.context';
 import './login.scss';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { ILoginData } from '../../common/interfaces/login-data.interface';
+import { delay } from '../../common/utils';
 
 const Login = () => {
   const { user, login } = useContext(AuthContext);
 
-  const handleLogin = () => {
-    login();
+  const navigate = useNavigate();
+
+  const [inputs, setInputs] = useState<ILoginData>({
+    username: '',
+    password: '',
+  });
+
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      await login(inputs);
+      navigate('/');
+    } catch (error: any) {
+      setError('Something went wrong. Please try again later');
+      if (error.response.status == 401)
+        setError('You have entered an invalid username or password');
+    }
   };
 
   return (
@@ -15,9 +39,20 @@ const Login = () => {
       <div className="login__card">
         <h1>Login</h1>
         <form className="login__form">
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button className="action-button" onClick={handleLogin}>
+          <input
+            type="username"
+            placeholder="username"
+            name="username"
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={handleChange}
+          />
+          {error && <div className="error-message">{error}</div>}
+          <button type="submit" className="action-button" onClick={handleLogin}>
             Login
           </button>
         </form>

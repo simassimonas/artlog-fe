@@ -30,3 +30,8 @@ a {
     color: inherit;
   }
 }
+
+.error-message {
+  color: $error-color;
+  font-size: 0.8em;
+}

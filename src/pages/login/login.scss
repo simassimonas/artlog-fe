@@ -1,7 +1,8 @@
 @import '../../styles/variables';
+@import '../../styles/breakpoints.scss';
 
 .login {
-  height: 100vh;
+  min-height: 100vh;
   background-color: $third-color;
   display: flex;
   align-items: center;
@@ -17,7 +18,7 @@
     padding: 50px;
     width: 250px;
 
-    @media (max-width: 991px) {
+    @include tablet {
       width: 70%;
       padding: 20px;
     }

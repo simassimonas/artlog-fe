@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import palette from './mui-palette.module.scss';
-//'#228B22'
+
 export const theme = createTheme({
   palette: {
     primary: {

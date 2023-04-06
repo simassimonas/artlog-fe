@@ -4,12 +4,17 @@ import { Link } from 'react-router-dom';
 import SearchBar from '../search-bar/search-bar';
 import { AuthContext } from '../../context/auth.context';
 import { useContext } from 'react';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   const search = (query: string) => {
     console.log('searchhh', query);
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -28,8 +33,9 @@ const Navbar = () => {
       <div className="navbar__right">
         <ChatOutlinedIcon />
         <div className="navbar__user">
-          <img src={user?.profile_pic} alt="logged in user's profile" />
+          <img src={user?.profilePic} alt="logged in user's profile" />
           <span>{user?.name}</span>
+          <LogoutIcon onClick={handleLogout} />
         </div>
       </div>
     </div>

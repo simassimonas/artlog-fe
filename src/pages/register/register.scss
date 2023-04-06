@@ -1,8 +1,9 @@
 @import '../../styles/variables';
 
 .register {
-  height: 100vh;
-  background-color: rgb(193, 190, 255);
+  min-height: 100vh;
+  padding: 20px 0px;
+  background-color: $third-color;
   display: flex;
   align-items: center;
   justify-content: center;

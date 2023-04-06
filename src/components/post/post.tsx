@@ -21,22 +21,22 @@ export const Post = ({ post }: { post: IPost }) => {
         <div className="post__profile">
           <Link
             className="post__user-link"
-            to={`/profile/${post.user.id}`}
+            to={`/profile/${post.userId._id}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <img
               className="post__profile-img"
-              src={post.user.profile_pic}
+              src={post.userId?.profilePic}
               alt="post's author"
             />
           </Link>
           <div className="post__user-details">
             <Link
               className="post__user-link"
-              to={`/profile/${post.user.id}`}
+              to={`/profile/${post.userId._id}`}
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
-              <span className="post__user-name">{post.user.name}</span>
+              <span className="post__user-name">{post.userId.name}</span>
             </Link>
             <span className="post__user-date">1 min ago</span>
           </div>
@@ -44,7 +44,10 @@ export const Post = ({ post }: { post: IPost }) => {
         <MoreHorizIcon className="post__menu-icon" />
       </div>
       <div className="post__content">
-        <img src={post.img} alt="post" />
+        <img
+          src={`${process.env.REACT_APP_API}/art/images/${post.artId.name}`}
+          alt="post"
+        />
       </div>
       <div className="post__feedback">
         <div className="post__feedback-item">

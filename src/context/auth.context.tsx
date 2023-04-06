@@ -1,15 +1,23 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
+import { ILoginData } from '../common/interfaces/login-data.interface';
 import { IUser } from '../common/interfaces/user.interface';
-import { getJsonParsedLocalStorageItem } from '../common/utils';
+import {
+  axiosRequest,
+  delay,
+  getJsonParsedLocalStorageItem,
+} from '../common/utils';
+import { useContext } from 'react';
 
 export interface IUserContextInterface {
   user: IUser | null;
-  login: () => void;
+  login: (inputs: ILoginData) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<IUserContextInterface>({
   user: null,
-  login: () => {},
+  login: async () => {},
+  logout: async () => {},
 });
 
 type UserProvideProps = {
@@ -21,15 +29,22 @@ export const AuthContextProvider = ({ children }: UserProvideProps) => {
     getJsonParsedLocalStorageItem('user')
   );
 
-  const login = () => {
-    //TO DO
+  const login = async (inputs: ILoginData) => {
+    const res = await axiosRequest.post('/auth/login', inputs);
+    const userInfo = await axiosRequest.get(`/users/${res.data.user_id}`);
     setUser({
-      id: '123',
-      username: 'simassmonas',
-      name: 'Simas Simonazzzzsssssssssssssssssssssssssssssssssss',
-      profile_pic:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
+      _id: userInfo?.data?._id,
+      username: userInfo?.data?.username,
+      name: userInfo?.data?.firstName + ' ' + userInfo?.data?.lastName,
+      profilePic: userInfo?.data?.profilePic,
     });
+    // delay for protected route to get the new user value
+    await delay(1);
+  };
+
+  const logout = async () => {
+    const res = await axiosRequest.get('/auth/logout');
+    setUser(null);
   };
 
   useEffect(() => {
@@ -37,7 +52,7 @@ export const AuthContextProvider = ({ children }: UserProvideProps) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
