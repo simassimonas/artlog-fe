@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/auth.context';
 import './posting.scss';
 
 const Posting = () => {
-  const { user } = useContext(AuthContext);
+  const { loggedInUser } = useContext(AuthContext);
   const [error, setError] = useState<string | null>(null);
   const [prompt, setPrompt] = useState('');
 

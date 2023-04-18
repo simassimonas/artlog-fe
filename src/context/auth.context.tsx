@@ -9,13 +9,13 @@ import {
 import { useContext } from 'react';
 
 export interface IUserContextInterface {
-  user: IUser | null;
+  loggedInUser: IUser | null;
   login: (inputs: ILoginData) => Promise<void>;
   logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<IUserContextInterface>({
-  user: null,
+  loggedInUser: null,
   login: async () => {},
   logout: async () => {},
 });
@@ -25,34 +25,49 @@ type UserProvideProps = {
 };
 
 export const AuthContextProvider = ({ children }: UserProvideProps) => {
-  const [user, setUser] = useState<IUser | null>(
+  const [loggedInUser, setLoggedInUser] = useState<IUser | null>(
     getJsonParsedLocalStorageItem('user')
   );
 
   const login = async (inputs: ILoginData) => {
     const res = await axiosRequest.post('/auth/login', inputs);
     const userInfo = await axiosRequest.get(`/users/${res.data.user_id}`);
-    setUser({
+    setLoggedInUser({
       _id: userInfo?.data?._id,
       username: userInfo?.data?.username,
       name: userInfo?.data?.firstName + ' ' + userInfo?.data?.lastName,
       profilePic: userInfo?.data?.profilePic,
+      firstName: userInfo?.data?.firstName,
+      lastName: userInfo?.data?.lastName,
+      email: userInfo?.data?.email,
     });
     // delay for protected route to get the new user value
     await delay(1);
   };
 
   const logout = async () => {
-    const res = await axiosRequest.get('/auth/logout');
-    setUser(null);
+    setLoggedInUser(null);
+    const res = await axiosRequest.get('/auth/logoutt');
   };
 
   useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(user));
-  }, [user]);
+    localStorage.setItem('user', JSON.stringify(loggedInUser));
+  }, [loggedInUser]);
+
+  axiosRequest.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response && error.response.status === 401) {
+        logout();
+      }
+      return Promise.reject(error);
+    }
+  );
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ loggedInUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

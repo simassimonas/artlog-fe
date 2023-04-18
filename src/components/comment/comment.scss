@@ -1,0 +1,42 @@
+@import '../../styles/variables';
+
+.comment {
+  margin: 30px 0px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  &__content {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    overflow-wrap: anywhere;
+
+    span {
+      font-weight: 500;
+    }
+
+    p {
+      color: gray;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+
+    span {
+      font-size: 0.8em;
+    }
+  }
+
+  .date {
+    flex: 1;
+    align-self: center;
+    // @TODO align date to the send button
+    //text-align: end;
+    color: gray;
+    font-size: 0.8em;
+  }
+}

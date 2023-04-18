@@ -1,50 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './posts.scss';
 import { IUser } from '../../common/interfaces/user.interface';
 import { IPost } from '../../common/interfaces/post.interface';
 import Post from '../post/post';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { axiosRequest } from '../../common/utils';
+import CircularProgress from '@mui/material/CircularProgress';
+import { InView } from 'react-intersection-observer';
 
-export const Posts = () => {
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['posts'],
-    queryFn: () =>
-      axiosRequest.get('/posts').then((res) => {
-        return res.data;
-      }),
-  });
+type Endpoints = {
+  [key: string]: string;
+};
 
-  console.log('laaaaaaaaa', data);
+export const Posts = ({
+  endpointName = 'feed',
+  profileId = '',
+  searchQuery = '',
+  limit = 2,
+}) => {
+  const endpoints: Endpoints = {
+    feed: '/posts/feed',
+    profile: `/posts/profile/${profileId}`,
+    search: `/posts/search/${searchQuery}`,
+  };
 
-  // const mockUser: IUser = {
-  //   _id: '123',
-  //   username: 'simassimonas',
-  //   name: 'simas simonas',
-  //   profilePic:
-  //     'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
-  // };
+  const endpoint = endpoints[endpointName];
 
-  // const mockPosts: IPost[] = [
-  //   {
-  //     id: '1',
-  //     img: 'https://www.actuia.com/wp-content/uploads/2022/09/oeuvre-art-generee-IA-MidJourney-remporte-1er-prix-Colorado-State-Fair.png',
-  //     userId: mockUser,
-  //     artId:
-  //   },
-  //   {
-  //     id: '1',
-  //     img: 'https://www.actuia.com/wp-content/uploads/2022/09/oeuvre-art-generee-IA-MidJourney-remporte-1er-prix-Colorado-State-Fair.png',
-  //     userId: mockUser,
-  //   },
-  // ];
+  const {
+    isLoading,
+    error,
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ['posts', endpointName],
+    async ({ pageParam = 0 }) => {
+      const res = await axiosRequest.get(
+        `${endpoint}?page=${pageParam}&limit=${limit}`
+      );
+      return res.data;
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+    }
+  );
+
+  const observerCallback = (inView: boolean) => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const allPosts = data?.pages.flatMap((pageData) => pageData.posts) || [];
 
   return (
     <div className="posts">
-      <span>{}</span>
-      {isLoading
-        ? 'loading'
-        : data?.map((post: any) => <Post key={post._id} post={post}></Post>)}
+      {error
+        ? 'Something went wrong!'
+        : allPosts?.map((post: any) => (
+            <Post key={post?._id} post={post}></Post>
+          ))}
+      {(isLoading || isFetchingNextPage) && <CircularProgress />}
+      <InView onChange={observerCallback} threshold={1}>
+        <div style={{ height: 1 }}></div>
+      </InView>
     </div>
   );
 };

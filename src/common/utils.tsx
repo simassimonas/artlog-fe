@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth.context';
 
 export const getJsonParsedLocalStorageItem = (key: string): any | null => {
   const item = localStorage.getItem(key);
@@ -15,3 +17,16 @@ export const delay = (milliseconds: number) => {
     setTimeout(resolve, milliseconds);
   });
 };
+
+// axiosRequest.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     if (error.response && error.response.status === 401) {
+//       console.log('lala');
+//       logout();
+//     }
+//     return Promise.reject(error);
+//   }
+// );

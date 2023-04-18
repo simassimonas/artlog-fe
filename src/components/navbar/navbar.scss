@@ -28,6 +28,16 @@
       font-size: 20px;
       color: $primary-color;
     }
+
+    img {
+      height: 30px;
+      width: auto;
+      padding-right: 5px;
+
+      @include mobile {
+        height: 23px;
+      }
+    }
   }
 
   &__middle {

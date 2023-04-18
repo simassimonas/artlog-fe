@@ -1,7 +1,10 @@
 import { IUser } from './user.interface';
 
 export interface IComment {
-  date: string;
-  comment: string;
-  user: IUser;
+  _id: string;
+  postId: string;
+  userId: IUser;
+  createdAt: string;
+  content: string;
+  likes: string[];
 }

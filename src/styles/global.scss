@@ -15,12 +15,31 @@ body {
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &--dark {
+    background-color: $darker-color;
+  }
 }
 
 .icon-text-button {
   display: flex;
   gap: 5px;
   align-items: center;
+  height: 35px;
 }
 
 a {
@@ -34,4 +53,21 @@ a {
 .error-message {
   color: $error-color;
   font-size: 0.8em;
+}
+
+.span-button {
+  cursor: pointer;
+  color: $darker-color;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &--active {
+    color: $primary-color;
+  }
 }

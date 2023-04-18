@@ -5,9 +5,11 @@ import SearchBar from '../search-bar/search-bar';
 import { AuthContext } from '../../context/auth.context';
 import { useContext } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
+import defaultProfileImg from '../../assets/default-profile.png';
+import artlogLogo from '../../assets/artlog-logo.png';
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { loggedInUser, logout } = useContext(AuthContext);
 
   const search = (query: string) => {
     console.log('searchhh', query);
@@ -21,7 +23,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="navbar__left">
         <Link to="">
-          <span>ArtLog</span>
+          <img src={artlogLogo} alt="logged in user's profile" />
         </Link>
       </div>
       <div className="navbar__middle">
@@ -33,8 +35,16 @@ const Navbar = () => {
       <div className="navbar__right">
         <ChatOutlinedIcon />
         <div className="navbar__user">
-          <img src={user?.profilePic} alt="logged in user's profile" />
-          <span>{user?.name}</span>
+          <img
+            src={
+              loggedInUser?.profilePic
+                ? `${process.env.REACT_APP_API}/users/images/${loggedInUser?.profilePic}`
+                : defaultProfileImg
+            }
+            alt="logged in user's profile"
+          />
+
+          <span>{loggedInUser?.name}</span>
           <LogoutIcon onClick={handleLogout} />
         </div>
       </div>

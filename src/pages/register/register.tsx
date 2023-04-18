@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './register.scss';
 import { toast } from 'react-toastify';
 import { axiosRequest } from '../../common/utils';
+import artlogLogo from '../../assets/artlog-logo.png';
 
 const Register = () => {
   const formRef: any = useRef();
@@ -45,6 +46,9 @@ const Register = () => {
 
   return (
     <div className="register">
+      <div className="register__logo">
+        <img src={artlogLogo} alt="logged in user's profile" />
+      </div>
       <div className="register__card">
         <h1>Register</h1>
         <form className="register__form" ref={formRef}>

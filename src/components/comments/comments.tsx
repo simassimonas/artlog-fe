@@ -1,69 +1,72 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IComment } from '../../common/interfaces/comment.interface';
 import { IUser } from '../../common/interfaces/user.interface';
 import './comments.scss';
 import { AuthContext } from '../../context/auth.context';
+import defaultProfileImg from '../../assets/default-profile.png';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { axiosRequest } from '../../common/utils';
+import Comment from '../comment/comment';
 
-const Comments = () => {
+const Comments = ({ postId }: { postId: string }) => {
+  const queryClient = useQueryClient();
   const [newComment, setNewComment] = useState('');
-  const { user } = useContext(AuthContext);
-  const mockUser: IUser = {
-    _id: '123',
-    username: 'simassimonas',
-    name: 'Simas Simonas',
-    profilePic:
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
-  };
+  const { loggedInUser } = useContext(AuthContext);
 
-  const comments: IComment[] = [
-    {
-      date: '1 hour ago',
-      comment: 'very nice picture good job',
-      user: mockUser,
-    },
-    {
-      date: '1 hour ago',
-      comment:
-        'very nice picture good jobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbjobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbjobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-      user: mockUser,
-    },
-    {
-      date: '1 hour ago',
-      comment: 'very nice picture good job',
-      user: mockUser,
-    },
-  ];
+  const { data: comments } = useQuery(['comments', postId], () =>
+    axiosRequest.get(`/posts/${postId}/comments`).then((res) => {
+      return res.data;
+    })
+  );
 
-  const handleClick = async (e: any) => {
+  const newCommentMutation = useMutation(
+    (content: string) => {
+      console.log('newcoment', newComment);
+      return axiosRequest.post(`/posts/${postId}/comments`, { content });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['comments', postId]);
+      },
+    }
+  );
+
+  const handleNewComment = async (e: any) => {
     e.preventDefault();
-    // mutation.mutate({ desc, postId });
-    // setDesc("");
+    newCommentMutation.mutate(newComment);
+    setNewComment('');
   };
 
   return (
     <div className="comments">
-      <div className="write">
-        <img src={'/upload/' + user?.profilePic} alt="" />
+      <div className="comments__write">
+        <img
+          src={
+            loggedInUser?.profilePic
+              ? `${process.env.REACT_APP_API}/users/images/${loggedInUser?.profilePic}`
+              : defaultProfileImg
+          }
+          alt="user profile"
+        />
         <input
           type="text"
           placeholder="leave a comment"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button className="action-button" onClick={handleClick}>
+        <button
+          className="action-button"
+          onClick={handleNewComment}
+          disabled={!newComment.trim()}
+        >
           Send
         </button>
       </div>
-      {comments.map((comment) => (
-        <div className="comment">
-          <img src={comment.user.profilePic} alt="user"></img>
-          <div className="info">
-            <span>{comment.user.name}</span>
-            <p>{comment.comment}</p>
-          </div>
-          <span className="date">{comment.date}</span>
-        </div>
-      ))}
+      <div className="comments__content">
+        {comments?.map((comment: IComment) => (
+          <Comment key={comment?._id} comment={comment}></Comment>
+        ))}
+      </div>
     </div>
   );
 };

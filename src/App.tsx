@@ -21,14 +21,20 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function App() {
   const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-    const { user } = useContext(AuthContext);
-    if (!user) {
+    const { loggedInUser } = useContext(AuthContext);
+    if (!loggedInUser) {
       return <Navigate to="/login" />;
     }
     return children;
   };
 
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
 
   const Layout = () => {
     return (

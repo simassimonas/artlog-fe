@@ -3,10 +3,10 @@ import { AuthContext, IUserContextInterface } from '../../context/auth.context';
 import './login.scss';
 import { useContext, useState } from 'react';
 import { ILoginData } from '../../common/interfaces/login-data.interface';
-import { delay } from '../../common/utils';
+import artlogLogo from '../../assets/artlog-logo.png';
 
 const Login = () => {
-  const { user, login } = useContext(AuthContext);
+  const { loggedInUser, login } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -36,6 +36,9 @@ const Login = () => {
 
   return (
     <div className="login">
+      <div className="login__logo">
+        <img src={artlogLogo} alt="logged in user's profile" />
+      </div>
       <div className="login__card">
         <h1>Login</h1>
         <form className="login__form">

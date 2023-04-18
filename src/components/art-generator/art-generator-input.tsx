@@ -2,13 +2,14 @@ import axios from 'axios';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/auth.context';
 import './art-generator-input.scss';
+import defaultProfileImg from '../../assets/default-profile.png';
 
 const ArtGeneratorInput = ({
   initialValue = '',
   placeholder,
   onGenerate,
 }: any) => {
-  const { user } = useContext(AuthContext);
+  const { loggedInUser } = useContext(AuthContext);
   const [error, setError] = useState<string | null>(null);
   const [prompt, setPrompt] = useState('');
 
@@ -22,7 +23,15 @@ const ArtGeneratorInput = ({
     <div className="art-generator-input">
       <div className="top">
         <div className="left">
-          <img src={'/upload/' + user?.profilePic} alt="" />
+          <img
+            src={
+              loggedInUser?.profilePic
+                ? `${process.env.REACT_APP_API}/users/images/${loggedInUser?.profilePic}`
+                : defaultProfileImg
+            }
+            alt="user profile"
+          />
+
           <textarea
             cols={6}
             rows={5}
