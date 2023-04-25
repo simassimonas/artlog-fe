@@ -13,7 +13,6 @@ const SearchBar = ({ initialValue = '', placeholder, onSearch }: any) => {
 
   const handleSearch = (event: any) => {
     event.preventDefault();
-    console.log('ahndlesearch', inputValue);
     onSearch(inputValue);
   };
 
@@ -24,6 +23,7 @@ const SearchBar = ({ initialValue = '', placeholder, onSearch }: any) => {
   return (
     <Paper
       component="form"
+      elevation={1}
       onSubmit={handleSearch}
       sx={{
         p: '2px 4px',
@@ -31,7 +31,7 @@ const SearchBar = ({ initialValue = '', placeholder, onSearch }: any) => {
         alignItems: 'center',
         width: 400,
         [theme.breakpoints.down('sm')]: {
-          width: '80%', // change width to 100% for phones
+          width: '80%', // change width for phones
         },
       }}
     >

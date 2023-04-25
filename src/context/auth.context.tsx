@@ -12,12 +12,14 @@ export interface IUserContextInterface {
   loggedInUser: IUser | null;
   login: (inputs: ILoginData) => Promise<void>;
   logout: () => Promise<void>;
+  fetchLoggedInUserInfo: (userId: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<IUserContextInterface>({
   loggedInUser: null,
   login: async () => {},
   logout: async () => {},
+  fetchLoggedInUserInfo: async () => {},
 });
 
 type UserProvideProps = {
@@ -31,7 +33,13 @@ export const AuthContextProvider = ({ children }: UserProvideProps) => {
 
   const login = async (inputs: ILoginData) => {
     const res = await axiosRequest.post('/auth/login', inputs);
-    const userInfo = await axiosRequest.get(`/users/${res.data.user_id}`);
+    await fetchLoggedInUserInfo(res.data.user_id);
+    // delay for protected route to get the new user value
+    await delay(1);
+  };
+
+  const fetchLoggedInUserInfo = async (userId: string) => {
+    const userInfo = await axiosRequest.get(`/users/${userId}`);
     setLoggedInUser({
       _id: userInfo?.data?._id,
       username: userInfo?.data?.username,
@@ -40,14 +48,13 @@ export const AuthContextProvider = ({ children }: UserProvideProps) => {
       firstName: userInfo?.data?.firstName,
       lastName: userInfo?.data?.lastName,
       email: userInfo?.data?.email,
+      isPrivate: userInfo?.data?.isPrivate || false,
     });
-    // delay for protected route to get the new user value
-    await delay(1);
   };
 
   const logout = async () => {
     setLoggedInUser(null);
-    const res = await axiosRequest.get('/auth/logoutt');
+    const res = await axiosRequest.get('/auth/logout');
   };
 
   useEffect(() => {
@@ -67,7 +74,9 @@ export const AuthContextProvider = ({ children }: UserProvideProps) => {
   );
 
   return (
-    <AuthContext.Provider value={{ loggedInUser, login, logout }}>
+    <AuthContext.Provider
+      value={{ loggedInUser, login, logout, fetchLoggedInUserInfo }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -6,7 +6,7 @@ import Posts from '../../components/posts/posts';
 import defaultProfileImg from '../../assets/default-profile.png';
 import { axiosRequest } from '../../common/utils';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 import { useContext } from 'react';
 import FiendshipButton from '../../components/friendship-button/friendship-button';
@@ -56,22 +56,25 @@ const Profile = () => {
                 </span>
               </div>
               <div className="profile__actions">
-                {/* <button className="action-button icon-text-button">
-              <PersonAddAlt1Icon />
-              Add friend
-            </button> */}
                 <FiendshipButton profileId={profileId || ''} />
-                <button
-                  className="action-button icon-text-button"
-                  onClick={() => console.log('clicked message button')}
-                >
-                  <MessageIcon />
-                  Message
-                </button>
 
-                <button className="action-button icon-text-button">
-                  <SettingsIcon />
-                </button>
+                {!isOwnProfile && (
+                  <button
+                    className="action-button icon-text-button"
+                    onClick={() => console.log('clicked message button')}
+                  >
+                    <MessageIcon />
+                    Message
+                  </button>
+                )}
+
+                {isOwnProfile && (
+                  <Link to="/settings">
+                    <button className="action-button icon-text-button">
+                      <SettingsIcon />
+                    </button>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

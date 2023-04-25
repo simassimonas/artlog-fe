@@ -23,9 +23,9 @@ export const Post = ({ post }: { post: IPost }) => {
   const queryClient = useQueryClient();
   const { loggedInUser } = useContext(AuthContext);
   const [commentOpen, setCommentOpen] = useState(false);
-  const [likes, setLikes] = useState(post.likes.length);
+  const [likes, setLikes] = useState(post?.likes?.length);
   const [postLiked, setPostLiked] = useState(
-    post.likes.includes(String(loggedInUser?._id))
+    post?.likes?.includes(String(loggedInUser?._id))
   );
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -114,7 +114,6 @@ export const Post = ({ post }: { post: IPost }) => {
             <span className="post__user-date">{post.createdAt.toString()}</span>
           </div>
         </div>
-        {/* <MoreHorizIcon className="post__menu-icon" /> */}
         <div>
           <IconButton
             id="basic-button"
@@ -154,7 +153,8 @@ export const Post = ({ post }: { post: IPost }) => {
         <div className="post__feedback-item">
           {postLiked ? (
             <FavoriteOutlinedIcon
-              style={{ color: 'red' }}
+              //style={{ color: 'red' }}
+              color="primary"
               onClick={handleLike}
             />
           ) : (
@@ -170,6 +170,7 @@ export const Post = ({ post }: { post: IPost }) => {
           {comments?.length} Comments
         </div>
       </div>
+      <div>{post?.tags}</div>
       {commentOpen && <Comments postId={post._id} />}
     </div>
   );

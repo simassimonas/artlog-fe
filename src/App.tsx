@@ -18,6 +18,9 @@ import { useContext } from 'react';
 import { AuthContext } from './context/auth.context';
 import Posting from './pages/posting/posting';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Search from './pages/search/search';
+import Settings from './pages/settings/settings';
+import PostPage from './pages/post-page/post-page';
 
 function App() {
   const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
@@ -79,6 +82,18 @@ function App() {
         {
           path: '/posting',
           element: <Posting />,
+        },
+        {
+          path: '/posts/:id',
+          element: <PostPage />,
+        },
+        {
+          path: '/search',
+          element: <Search />,
+        },
+        {
+          path: '/settings',
+          element: <Settings />,
         },
       ],
     },

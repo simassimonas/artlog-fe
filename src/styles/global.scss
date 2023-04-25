@@ -8,11 +8,14 @@ body {
 }
 
 .action-button {
+  font-family: Open-Sans, Helvetica, Sans-Serif;
+  font-size: 0.9em;
+  font-weight: bold;
   padding: 10px;
   border: none;
   background-color: $primary-color;
   color: white;
-  font-weight: bold;
+
   border-radius: 5px;
   cursor: pointer;
 
@@ -32,6 +35,10 @@ body {
 
   &--dark {
     background-color: $darker-color;
+  }
+
+  button {
+    height: 50px;
   }
 }
 

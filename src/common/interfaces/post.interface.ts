@@ -8,4 +8,5 @@ export interface IPost {
   timezone: string;
   createdAt: string;
   likes: string[];
+  tags: string[];
 }

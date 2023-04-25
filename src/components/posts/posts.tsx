@@ -1,9 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import './posts.scss';
 import { IUser } from '../../common/interfaces/user.interface';
 import { IPost } from '../../common/interfaces/post.interface';
 import Post from '../post/post';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { axiosRequest } from '../../common/utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { InView } from 'react-intersection-observer';
@@ -16,16 +20,8 @@ export const Posts = ({
   endpointName = 'feed',
   profileId = '',
   searchQuery = '',
-  limit = 2,
+  limit = 3,
 }) => {
-  const endpoints: Endpoints = {
-    feed: '/posts/feed',
-    profile: `/posts/profile/${profileId}`,
-    search: `/posts/search/${searchQuery}`,
-  };
-
-  const endpoint = endpoints[endpointName];
-
   const {
     isLoading,
     error,
@@ -34,10 +30,17 @@ export const Posts = ({
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    ['posts', endpointName],
+    ['posts', endpointName, searchQuery],
     async ({ pageParam = 0 }) => {
+      const endpoints: Endpoints = {
+        feed: '/posts/feed?',
+        profile: `/posts/profile/${profileId}?`,
+        search: `/posts/search?query=${searchQuery}&`,
+      };
+      const endpoint = endpoints[endpointName];
+
       const res = await axiosRequest.get(
-        `${endpoint}?page=${pageParam}&limit=${limit}`
+        `${endpoint}page=${pageParam}&limit=${limit}`
       );
       return res.data;
     },
@@ -62,6 +65,8 @@ export const Posts = ({
             <Post key={post?._id} post={post}></Post>
           ))}
       {(isLoading || isFetchingNextPage) && <CircularProgress />}
+
+      {allPosts?.length == 0 && 'No posts found'}
       <InView onChange={observerCallback} threshold={1}>
         <div style={{ height: 1 }}></div>
       </InView>

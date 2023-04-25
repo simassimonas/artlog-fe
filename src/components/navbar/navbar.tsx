@@ -1,6 +1,6 @@
 import './navbar.scss';
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SearchBar from '../search-bar/search-bar';
 import { AuthContext } from '../../context/auth.context';
 import { useContext } from 'react';
@@ -9,14 +9,11 @@ import defaultProfileImg from '../../assets/default-profile.png';
 import artlogLogo from '../../assets/artlog-logo.png';
 
 const Navbar = () => {
-  const { loggedInUser, logout } = useContext(AuthContext);
+  const { loggedInUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const search = (query: string) => {
-    console.log('searchhh', query);
-  };
-
-  const handleLogout = () => {
-    logout();
+    navigate(`/search?query=${query}`);
   };
 
   return (
@@ -35,17 +32,17 @@ const Navbar = () => {
       <div className="navbar__right">
         <ChatOutlinedIcon />
         <div className="navbar__user">
-          <img
-            src={
-              loggedInUser?.profilePic
-                ? `${process.env.REACT_APP_API}/users/images/${loggedInUser?.profilePic}`
-                : defaultProfileImg
-            }
-            alt="logged in user's profile"
-          />
-
+          <Link to={`profile/${loggedInUser?._id}`}>
+            <img
+              src={
+                loggedInUser?.profilePic
+                  ? `${process.env.REACT_APP_API}/users/images/${loggedInUser?.profilePic}`
+                  : defaultProfileImg
+              }
+              alt="logged in user's profile"
+            />
+          </Link>
           <span>{loggedInUser?.name}</span>
-          <LogoutIcon onClick={handleLogout} />
         </div>
       </div>
     </div>
