@@ -86,7 +86,6 @@ const FiendshipButton = ({
   if (isOwnProfile) return null;
 
   const handleAddFriend = async () => {
-    console.log('handleadddfriend');
     await sendFriendRequest.mutate();
   };
 

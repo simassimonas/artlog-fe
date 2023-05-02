@@ -46,12 +46,14 @@ export const Users = ({ searchQuery = '', limit = 3 }) => {
     <div className="users">
       {error ? (
         <div className="error-message">Something went wrong!</div>
+      ) : isLoading ? (
+        <CircularProgress />
+      ) : allUsers?.length === 0 ? (
+        'No users found'
       ) : (
         allUsers?.map((user: any) => <User key={user?._id} user={user}></User>)
       )}
-      {(isLoading || isFetchingNextPage) && <CircularProgress />}
-
-      {allUsers?.length == 0 && 'No users found'}
+      {isFetchingNextPage && <CircularProgress />}
       <InView onChange={observerCallback} threshold={1}>
         <div style={{ height: 1 }}></div>
       </InView>

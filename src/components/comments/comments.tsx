@@ -21,7 +21,6 @@ const Comments = ({ postId }: { postId: string }) => {
 
   const newCommentMutation = useMutation(
     (content: string) => {
-      console.log('newcoment', newComment);
       return axiosRequest.post(`/posts/${postId}/comments`, { content });
     },
     {

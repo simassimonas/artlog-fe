@@ -18,14 +18,12 @@ const Profile = () => {
   const isOwnProfile: boolean = loggedInUser?._id === profileId;
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ['user'],
+    queryKey: ['user', profileId],
     queryFn: () =>
       axiosRequest.get('/users/' + profileId).then((res) => {
         return res.data;
       }),
   });
-
-  console.log(isOwnProfile);
 
   return (
     <div className="profile">
@@ -59,10 +57,7 @@ const Profile = () => {
                 <FiendshipButton profileId={profileId || ''} />
 
                 {!isOwnProfile && (
-                  <button
-                    className="action-button icon-text-button"
-                    onClick={() => console.log('clicked message button')}
-                  >
+                  <button className="action-button icon-text-button">
                     <MessageIcon />
                     Message
                   </button>

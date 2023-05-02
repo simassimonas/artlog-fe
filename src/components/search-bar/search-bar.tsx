@@ -31,7 +31,7 @@ const SearchBar = ({ initialValue = '', placeholder, onSearch }: any) => {
         alignItems: 'center',
         width: 400,
         [theme.breakpoints.down('sm')]: {
-          width: '80%', // change width for phones
+          width: '100%', // change width for phones
         },
       }}
     >

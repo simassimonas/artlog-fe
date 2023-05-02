@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
 import Posts from '../../components/posts/posts';
 import './home.scss';
 
-const home = () => {
+const Home = () => {
   return (
     <div className="home">
       <Posts />
@@ -9,4 +10,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default Home;

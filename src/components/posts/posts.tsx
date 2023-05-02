@@ -20,7 +20,7 @@ export const Posts = ({
   endpointName = 'feed',
   profileId = '',
   searchQuery = '',
-  limit = 3,
+  limit = 2,
 }) => {
   const {
     isLoading,
@@ -30,7 +30,7 @@ export const Posts = ({
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    ['posts', endpointName, searchQuery],
+    ['posts', endpointName, profileId, searchQuery],
     async ({ pageParam = 0 }) => {
       const endpoints: Endpoints = {
         feed: '/posts/feed?',
@@ -59,14 +59,16 @@ export const Posts = ({
 
   return (
     <div className="posts">
-      {error
-        ? 'Something went wrong!'
-        : allPosts?.map((post: any) => (
-            <Post key={post?._id} post={post}></Post>
-          ))}
-      {(isLoading || isFetchingNextPage) && <CircularProgress />}
-
-      {allPosts?.length == 0 && 'No posts found'}
+      {error ? (
+        <div className="error-message">Something went wrong!</div>
+      ) : isLoading ? (
+        <CircularProgress />
+      ) : allPosts?.length === 0 ? (
+        'No posts found'
+      ) : (
+        allPosts?.map((post: any) => <Post key={post?._id} post={post}></Post>)
+      )}
+      {isFetchingNextPage && <CircularProgress />}
       <InView onChange={observerCallback} threshold={1}>
         <div style={{ height: 1 }}></div>
       </InView>

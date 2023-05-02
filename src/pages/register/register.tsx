@@ -33,7 +33,10 @@ const Register = () => {
         `${process.env.REACT_APP_API}/auth/register`,
         inputs
       );
-      toast.success('Sign up successful. Please log in.', { autoClose: 5000 });
+      toast.success('Sign up successful. Please log in.', {
+        autoClose: 5000,
+        containerId: 'global',
+      });
       navigate('/login');
     } catch (error: any) {
       if (error.response.status == 400)

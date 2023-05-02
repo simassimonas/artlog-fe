@@ -22,7 +22,7 @@ export const AuthContext = createContext<IUserContextInterface>({
   fetchLoggedInUserInfo: async () => {},
 });
 
-type UserProvideProps = {
+export type UserProvideProps = {
   children: ReactNode;
 };
 

@@ -53,7 +53,6 @@ const Search = () => {
   }, [query]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log('NEW VALUE', newValue);
     setValue(newValue);
   };
 

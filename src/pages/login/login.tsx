@@ -4,6 +4,7 @@ import './login.scss';
 import { useContext, useState } from 'react';
 import { ILoginData } from '../../common/interfaces/login-data.interface';
 import artlogLogo from '../../assets/artlog-logo.png';
+import { ToastContainer } from 'react-toastify';
 
 const Login = () => {
   const { loggedInUser, login } = useContext(AuthContext);

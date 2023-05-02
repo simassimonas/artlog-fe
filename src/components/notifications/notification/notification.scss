@@ -1,0 +1,60 @@
+@import '../../../styles/breakpoints.scss';
+@import '../../../styles/variables';
+
+.notification {
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 350px;
+  width: 100%;
+
+  &--active {
+    background-color: rgba($third-color, 0.3); // 50% opacity
+  }
+
+  &__initiator-image {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__initiator-info {
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    overflow: hidden;
+  }
+
+  &__user-name {
+    font-size: 1.1em;
+    font-weight: 500;
+  }
+
+  &__user-username {
+    font-size: 0.8em;
+    color: gray;
+    word-wrap: break-word;
+  }
+
+  &__describtion {
+    font-size: 0.9em;
+  }
+
+  &__action {
+    font-weight: bold;
+  }
+}

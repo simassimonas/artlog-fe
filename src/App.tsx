@@ -8,7 +8,7 @@ import {
   Outlet,
   RouterProvider,
 } from 'react-router-dom';
-import Navbar from './components/navbar/navbar';
+import Header from './components/header/header';
 import Home from './pages/home/home';
 import Profile from './pages/profile/profile';
 import { ProtectedRouteProps } from './common/types/protected-route-props.type';
@@ -21,6 +21,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Search from './pages/search/search';
 import Settings from './pages/settings/settings';
 import PostPage from './pages/post-page/post-page';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
@@ -43,13 +44,30 @@ function App() {
     return (
       <QueryClientProvider client={queryClient}>
         <div>
-          <Navbar />
+          <Header />
           <div className="feed">
             <div className="feed__block">
               <Outlet />
             </div>
           </div>
         </div>
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          containerId={'layout'}
+          enableMultiContainer
+          style={{ padding: 0 }}
+          toastStyle={{ padding: 0 }}
+          bodyStyle={{ padding: 0 }}
+        />
       </QueryClientProvider>
     );
   };
