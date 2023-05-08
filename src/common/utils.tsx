@@ -24,7 +24,6 @@ export const delay = (milliseconds: number) => {
 //   },
 //   (error) => {
 //     if (error.response && error.response.status === 401) {
-//       console.log('lala');
 //       logout();
 //     }
 //     return Promise.reject(error);

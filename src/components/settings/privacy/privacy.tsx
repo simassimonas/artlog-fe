@@ -35,10 +35,14 @@ const Privacy = () => {
       }`;
       toast.success(successMessage, {
         autoClose: 5000,
+        containerId: 'global',
       });
       setIsModified(false);
     } catch (error: any) {
-      toast.error('Something went wrong. Try again later', { autoClose: 5000 });
+      toast.error('Something went wrong. Try again later', {
+        autoClose: 5000,
+        containerId: 'global',
+      });
     }
   };
 

@@ -51,18 +51,15 @@ const ProfilePic = () => {
       fetchLoggedInUserInfo(loggedInUser!._id);
       toast.success('Profile picture updated successfully', {
         autoClose: 5000,
+        containerId: 'global',
       });
     } catch (error: any) {
-      if (error.response.status == 422) {
-        toast.error(
-          'Incorrect image format (jpg, jpeg, png) or size too large',
-          { autoClose: 5000 }
-        );
-      } else {
-        toast.error('Profile picture updated successfully', {
-          autoClose: 5000,
-        });
-      }
+      let errorMessage = 'Something went wrong. Try again later';
+      if (error.response.status == 422)
+        errorMessage =
+          'Incorrect image format (jpg, jpeg, png) or size too large';
+
+      toast.error(errorMessage, { autoClose: 5000, containerId: 'global' });
     }
   };
 

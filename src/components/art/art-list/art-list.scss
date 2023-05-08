@@ -1,0 +1,30 @@
+@import '../../../styles/variables';
+@import '../../../styles/breakpoints.scss';
+
+.art-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+
+    @include mobile {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }
+
+  &__content-item {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}

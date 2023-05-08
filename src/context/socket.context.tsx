@@ -47,7 +47,6 @@ export const SocketContextProvider = ({ children }: UserProvideProps) => {
         //chatSocket.disconnect();
       };
     } else {
-      console.log('not auth in socket context');
       setSocketConnections({
         notifications: null,
         chat: null,

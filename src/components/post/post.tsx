@@ -1,11 +1,9 @@
 import React, { useContext, useState } from 'react';
 import './post.scss';
-import { IUser } from '../../common/interfaces/user.interface';
 import { IPost } from '../../common/interfaces/post.interface';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Link } from 'react-router-dom';
 import Comments from '../comments/comments';
@@ -15,9 +13,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { axiosRequest } from '../../common/utils';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 export const Post = ({ post }: { post: IPost }) => {
   const queryClient = useQueryClient();
@@ -62,7 +60,10 @@ export const Post = ({ post }: { post: IPost }) => {
     },
     {
       onSuccess: () => {
-        toast.success('Post was deleted successfully', { autoClose: 5000 });
+        toast.success('Post was deleted successfully', {
+          autoClose: 5000,
+          containerId: 'global',
+        });
         queryClient.invalidateQueries(['posts']);
       },
     }
@@ -111,7 +112,9 @@ export const Post = ({ post }: { post: IPost }) => {
                 </span>
               </div>
             </Link>
-            <span className="post__user-date">{post.createdAt.toString()}</span>
+            <span className="post__user-date">
+              {moment(post?.createdAt).fromNow()}
+            </span>
           </div>
         </div>
         <div>
@@ -170,7 +173,6 @@ export const Post = ({ post }: { post: IPost }) => {
           {comments?.length} Comments
         </div>
       </div>
-      <div>{post?.tags}</div>
       {commentOpen && <Comments postId={post._id} />}
     </div>
   );

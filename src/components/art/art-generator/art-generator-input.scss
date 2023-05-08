@@ -1,32 +1,33 @@
-@import '../../styles/variables';
-@import '../../styles/breakpoints.scss';
+@import '../../../styles/variables';
+@import '../../../styles/breakpoints.scss';
 
 .art-generator-input {
-  -webkit-box-shadow: 0px 0px 25px -10px $primary-color;
-  -moz-box-shadow: 0px 0px 25px -10px $primary-color;
-  box-shadow: 0px 0px 25px -10px $primary-color;
+  -webkit-box-shadow: 0px 0px 25px -10px $darker-color;
+  -moz-box-shadow: 0px 0px 25px -10px $darker-color;
+  box-shadow: 0px 0px 25px -10px $darker-color;
   border-radius: 5px;
   box-sizing: border-box;
-  width: 70%;
+  width: 100%;
 
-  @include tablet {
-    width: 90%;
-  }
+  // @include tablet {
+  //   width: 90%;
+  // }
 
-  @include mobile {
-    width: 90%;
-  }
+  // @include mobile {
+  //   width: 90%;
+  // }
 
   padding: 20px;
   .top {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     .left {
       display: flex;
       align-items: center;
       flex: 3;
+
       img {
         width: 40px;
         height: 40px;
@@ -59,12 +60,28 @@
     align-items: center;
     justify-content: space-between;
     .left {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       .tries {
         font-size: 0.8em;
         color: gray;
       }
+      .info {
+        font-size: 0.7em;
+        color: gray;
+      }
     }
     .right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+      .info {
+        font-size: 0.8em;
+        color: gray;
+      }
     }
   }
 }

@@ -34,7 +34,7 @@ const NotificationsList = ({
   handleClose,
   open,
   onUnseenNotificationsCountChange,
-  limit = 5,
+  limit = 10,
 }: NotificationsListProps) => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const queryClient = useQueryClient();
@@ -77,6 +77,9 @@ const NotificationsList = ({
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextPage,
+      onSuccess: (data) => {
+        markSeenNotifications();
+      },
     }
   );
 
@@ -88,16 +91,21 @@ const NotificationsList = ({
 
   useEffect(() => {
     notificationsSocket?.on('notification', (notification: INotification) => {
-      queryClient.invalidateQueries(['unseenNotificationsCount']);
-      queryClient.invalidateQueries(['notifications']);
-
       if (!isMobile) {
         toast(<Notification notification={notification} />, {
           containerId: 'layout',
         });
       }
+
       if (openRef.current) {
         updateNotificationsMutation.mutate([notification._id]);
+      } else {
+        queryClient.invalidateQueries(['unseenNotificationsCount']);
+
+        setAllNotifications((prevAllNotifications) => [
+          notification,
+          ...prevAllNotifications,
+        ]);
       }
     });
 
@@ -112,6 +120,7 @@ const NotificationsList = ({
         (pageData) => pageData.notifications
       );
       setAllNotifications(fetchedNotifications);
+      markSeenNotifications();
     }
   }, [data]);
 
@@ -129,17 +138,21 @@ const NotificationsList = ({
     },
   });
 
+  const markSeenNotifications = () => {
+    const unseenNotificationIds = allNotifications
+      .filter((notification) => !notification.isSeen)
+      .map((notification) => notification._id);
+
+    if (unseenNotificationIds.length === 0) return;
+    updateNotificationsMutation.mutate(unseenNotificationIds);
+  };
+
   const openRef = useRef(open);
   useEffect(() => {
     openRef.current = open;
 
     if (open) {
-      const unseenNotificationIds = allNotifications
-        .filter((notification) => !notification.isSeen)
-        .map((notification) => notification._id);
-
-      if (unseenNotificationIds.length === 0) return;
-      updateNotificationsMutation.mutate(unseenNotificationIds);
+      markSeenNotifications();
     }
   }, [open]);
 

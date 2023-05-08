@@ -34,9 +34,9 @@ const Header = () => {
 
   const drawerItems = [
     {
-      key: 'posting',
+      key: 'workshop',
       component: (
-        <IconButton component={Link} to="/posting">
+        <IconButton component={Link} to="/workshop">
           <CreateIcon color="secondary" />
         </IconButton>
       ),
@@ -44,7 +44,7 @@ const Header = () => {
     {
       key: 'chat',
       component: (
-        <IconButton component={Link} to="/posting">
+        <IconButton component={Link} to="/workshop">
           <ChatOutlinedIcon color="secondary" />
         </IconButton>
       ),

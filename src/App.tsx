@@ -98,7 +98,7 @@ function App() {
           element: <Profile />,
         },
         {
-          path: '/posting',
+          path: '/workshop',
           element: <Posting />,
         },
         {
