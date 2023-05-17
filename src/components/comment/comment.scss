@@ -5,6 +5,7 @@
   display: flex;
   justify-content: space-between;
   gap: 20px;
+  overflow-x: hidden;
 
   &__content {
     flex: 5;

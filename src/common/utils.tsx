@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/auth.context';
 
 export const getJsonParsedLocalStorageItem = (key: string): any | null => {
@@ -18,14 +18,18 @@ export const delay = (milliseconds: number) => {
   });
 };
 
-// axiosRequest.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   (error) => {
-//     if (error.response && error.response.status === 401) {
-//       logout();
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+export function useDebounce(value: any, delay: number) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}

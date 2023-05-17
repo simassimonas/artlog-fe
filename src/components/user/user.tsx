@@ -23,11 +23,11 @@ export const User = ({ user }: { user: IUser }) => {
         />
       </div>
       <div className="user__info">
-        <div className="post__user-names">
-          <span className="post__user-name">
+        <div className="user__names">
+          <span className="user__name">
             {user.firstName + ' ' + user.lastName}
           </span>
-          <span className="post__user-username">{'@' + user.username}</span>
+          <span className="user__username">{'@' + user.username}</span>
         </div>
       </div>
     </Link>

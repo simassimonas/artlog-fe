@@ -13,4 +13,8 @@ export const theme = createTheme({
       main: palette.error,
     },
   },
+  typography: {
+    fontFamily: ['Open-Sans', 'Helvetica', 'Sans-Serif'].join(','),
+    fontSize: 14,
+  },
 });

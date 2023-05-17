@@ -49,6 +49,7 @@ function TabPanel(props: TabPanelProps) {
               justifyContent: 'center',
               width: '100%',
             }}
+            component={'div'}
           >
             {children}
           </Typography>

@@ -7,6 +7,13 @@ body {
   font-family: Open-Sans, Helvetica, Sans-Serif;
 }
 
+textarea,
+input,
+button,
+select {
+  font-family: inherit;
+}
+
 .action-button {
   font-family: Open-Sans, Helvetica, Sans-Serif;
   font-size: 0.9em;
@@ -34,6 +41,10 @@ body {
   }
 
   &--dark {
+    background-color: $darker-color;
+  }
+
+  &--light {
     background-color: $darker-color;
   }
 

@@ -33,17 +33,23 @@
     object-fit: cover;
   }
 
-  &__user-names {
+  &__info {
+    width: 100%;
+    min-width: 0%;
+  }
+
+  &__names {
     display: flex;
     flex-direction: column;
   }
 
-  &__user-name {
+  &__name {
     font-size: 1.1em;
     font-weight: 500;
+    word-wrap: break-word;
   }
 
-  &__user-username {
+  &__username {
     font-size: 0.8em;
     color: gray;
     word-wrap: break-word;

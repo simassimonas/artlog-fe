@@ -4,11 +4,11 @@
   text-align: center;
 }
 
-.feed {
+.main {
   display: flex;
   justify-content: center;
 
-  &__block {
+  &__feed {
     width: 60%;
     display: flex;
     justify-content: center;
@@ -16,6 +16,12 @@
     @include tablet {
       width: 100%;
     }
+  }
+
+  &__chat {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }
 

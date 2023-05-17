@@ -44,7 +44,7 @@ const Header = () => {
     {
       key: 'chat',
       component: (
-        <IconButton component={Link} to="/workshop">
+        <IconButton component={Link} to="/chat">
           <ChatOutlinedIcon color="secondary" />
         </IconButton>
       ),
@@ -78,7 +78,9 @@ const Header = () => {
           </IconButton>
         </ListItem>
         {[...drawerItems].reverse().map((item) => (
-          <ListItem key={item.key}>{item.component}</ListItem>
+          <ListItem onClick={handleDrawerToggle} key={item.key}>
+            {item.component}
+          </ListItem>
         ))}
       </List>
     </Drawer>
@@ -127,3 +129,6 @@ const Header = () => {
 };
 
 export default Header;
+function componentDidMount() {
+  throw new Error('Function not implemented.');
+}

@@ -7,10 +7,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosRequest } from '../../common/utils';
 import { IComment } from '../../common/interfaces/comment.interface';
 import moment from 'moment';
+import ConfirmDialog from '../confirm-dialog/confirm-dialog';
 
 export const Comment = ({ comment }: { comment: IComment }) => {
   const queryClient = useQueryClient();
   const { loggedInUser } = useContext(AuthContext);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [likes, setLikes] = useState(comment.likes.length);
   const [commentLiked, setCommentLiked] = useState(
     comment.likes.includes(String(loggedInUser?._id))
@@ -35,7 +37,9 @@ export const Comment = ({ comment }: { comment: IComment }) => {
   );
 
   const deleteMutation = useMutation(
-    (liked: boolean) => {
+    () => {
+      console.log('comment.content', comment.content);
+      console.log('comment._id', comment._id);
       return axiosRequest.delete(
         `/posts/${comment.postId}/comments/${comment._id}`
       );
@@ -52,7 +56,7 @@ export const Comment = ({ comment }: { comment: IComment }) => {
   };
 
   const handleDelete = () => {
-    deleteMutation.mutate(commentLiked);
+    deleteMutation.mutate();
   };
 
   return (
@@ -85,9 +89,22 @@ export const Comment = ({ comment }: { comment: IComment }) => {
             </span>
           )}
           {loggedInUser?._id === comment.userId?._id && (
-            <span className="span-button" onClick={handleDelete}>
-              Delete
-            </span>
+            <>
+              <span
+                className="span-button"
+                onClick={() => setShowConfirmDialog(true)}
+              >
+                Delete
+              </span>
+              <ConfirmDialog
+                title="Delete Comment"
+                open={showConfirmDialog}
+                setOpen={setShowConfirmDialog}
+                onConfirm={handleDelete}
+              >
+                Are you sure you want to delete comment?
+              </ConfirmDialog>
+            </>
           )}
         </div>
       </div>

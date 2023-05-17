@@ -1,0 +1,60 @@
+@import '../../../styles/breakpoints.scss';
+@import '../../../styles/variables';
+
+.conversation {
+  padding: 10px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+
+  @include mobile {
+    justify-content: center;
+  }
+
+  &__image {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__user-info {
+    width: 100%;
+    min-width: 0%;
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &__user-names {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__user-name {
+    width: 100%;
+    font-size: 1em;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__user-username {
+    font-size: 0.8em;
+    color: gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

@@ -22,6 +22,7 @@ import Search from './pages/search/search';
 import Settings from './pages/settings/settings';
 import PostPage from './pages/post-page/post-page';
 import { ToastContainer } from 'react-toastify';
+import Chat from './pages/chat/chat';
 
 function App() {
   const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
@@ -45,10 +46,8 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <div>
           <Header />
-          <div className="feed">
-            <div className="feed__block">
-              <Outlet />
-            </div>
+          <div className="main">
+            <Outlet />
           </div>
         </div>
         <ToastContainer
@@ -91,27 +90,59 @@ function App() {
       children: [
         {
           path: '/',
-          element: <Home />,
+          element: (
+            <div className="main__feed">
+              <Home />
+            </div>
+          ),
         },
         {
           path: '/profile/:id',
-          element: <Profile />,
+          element: (
+            <div className="main__feed">
+              <Profile />
+            </div>
+          ),
         },
         {
           path: '/workshop',
-          element: <Posting />,
+          element: (
+            <div className="main__feed">
+              <Posting />
+            </div>
+          ),
         },
         {
           path: '/posts/:id',
-          element: <PostPage />,
+          element: (
+            <div className="main__feed">
+              <PostPage />
+            </div>
+          ),
         },
         {
           path: '/search',
-          element: <Search />,
+          element: (
+            <div className="main__feed">
+              <Search />
+            </div>
+          ),
         },
         {
           path: '/settings',
-          element: <Settings />,
+          element: (
+            <div className="main__feed">
+              <Settings />
+            </div>
+          ),
+        },
+        {
+          path: '/chat/:id?',
+          element: (
+            <div className="main__chat">
+              <Chat />
+            </div>
+          ),
         },
       ],
     },

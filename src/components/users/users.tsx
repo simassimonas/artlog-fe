@@ -4,6 +4,7 @@ import { axiosRequest } from '../../common/utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { InView } from 'react-intersection-observer';
 import User from '../user/user';
+import { IUser } from '../../common/interfaces/user.interface';
 
 export const Users = ({ searchQuery = '', limit = 20 }) => {
   const {
@@ -43,7 +44,9 @@ export const Users = ({ searchQuery = '', limit = 20 }) => {
       ) : allUsers?.length === 0 ? (
         'No users found'
       ) : (
-        allUsers?.map((user: any) => <User key={user?._id} user={user}></User>)
+        allUsers?.map((user: IUser) => (
+          <User key={user?._id} user={user}></User>
+        ))
       )}
       {isFetchingNextPage && <CircularProgress />}
       <InView onChange={observerCallback} threshold={1}>

@@ -31,7 +31,7 @@ const Privacy = () => {
       });
       fetchLoggedInUserInfo(loggedInUser!._id);
       const successMessage = `Your account was successfully set to ${
-        isPrivate ? 'Private' : 'Public'
+        isPrivate ? 'private' : 'public'
       }`;
       toast.success(successMessage, {
         autoClose: 5000,

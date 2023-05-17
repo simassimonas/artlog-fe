@@ -16,11 +16,13 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import ConfirmDialog from '../confirm-dialog/confirm-dialog';
 
 export const Post = ({ post }: { post: IPost }) => {
   const queryClient = useQueryClient();
   const { loggedInUser } = useContext(AuthContext);
   const [commentOpen, setCommentOpen] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [likes, setLikes] = useState(post?.likes?.length);
   const [postLiked, setPostLiked] = useState(
     post?.likes?.includes(String(loggedInUser?._id))
@@ -139,11 +141,19 @@ export const Post = ({ post }: { post: IPost }) => {
           >
             <MenuItem
               disabled={loggedInUser?._id !== post.userId?._id}
-              onClick={handlePostDelete}
+              onClick={() => setShowConfirmDialog(true)}
             >
               Delete post
             </MenuItem>
           </Menu>
+          <ConfirmDialog
+            title="Delete Post"
+            open={showConfirmDialog}
+            setOpen={setShowConfirmDialog}
+            onConfirm={handlePostDelete}
+          >
+            Are you sure you want to delete this post?
+          </ConfirmDialog>
         </div>
       </div>
       <div className="post__content">

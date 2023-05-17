@@ -56,12 +56,12 @@ const Profile = () => {
               <div className="profile__actions">
                 <FiendshipButton profileId={profileId || ''} />
 
-                {!isOwnProfile && (
+                <Link to={`/chat/${profileId}`}>
                   <button className="action-button icon-text-button">
                     <MessageIcon />
                     Message
                   </button>
-                )}
+                </Link>
 
                 {isOwnProfile && (
                   <Link to="/settings">

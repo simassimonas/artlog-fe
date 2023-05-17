@@ -4,12 +4,12 @@ import { AuthContext, UserProvideProps } from './auth.context';
 
 interface SocketConnections {
   notifications: Socket | null;
-  chat: Socket | null;
+  messages: Socket | null;
 }
 
 export const SocketContext = React.createContext<SocketConnections>({
   notifications: null,
-  chat: null,
+  messages: null,
 });
 
 const socketOptions = {
@@ -24,7 +24,7 @@ export const SocketContextProvider = ({ children }: UserProvideProps) => {
   const [socketConnections, setSocketConnections] = useState<SocketConnections>(
     {
       notifications: null,
-      chat: null,
+      messages: null,
     }
   );
 
@@ -35,21 +35,24 @@ export const SocketContextProvider = ({ children }: UserProvideProps) => {
         socketOptions
       );
 
-      //const chatSocket = io(`${process.env.REACT_APP_API}/chat`, socketOptions);
+      const messagesSocket = io(
+        `${process.env.REACT_APP_API}/messages`,
+        socketOptions
+      );
 
       setSocketConnections({
         notifications: notificationsSocket,
-        chat: null,
+        messages: messagesSocket,
       });
 
       return () => {
         notificationsSocket.disconnect();
-        //chatSocket.disconnect();
+        messagesSocket.disconnect();
       };
     } else {
       setSocketConnections({
         notifications: null,
-        chat: null,
+        messages: null,
       });
     }
   }, [loggedInUser]);

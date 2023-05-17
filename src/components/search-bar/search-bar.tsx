@@ -23,24 +23,25 @@ const SearchBar = ({ initialValue = '', placeholder, onSearch }: any) => {
   return (
     <Paper
       component="form"
-      elevation={1}
+      variant="outlined"
       onSubmit={handleSearch}
       sx={{
         p: '2px 4px',
         display: 'flex',
         alignItems: 'center',
-        width: 400,
+        padding: 0,
+        width: 1,
         [theme.breakpoints.down('sm')]: {
           width: '100%', // change width for phones
         },
       }}
     >
       <InputBase
-        sx={{ ml: 1, flex: 1 }}
+        sx={{ ml: 1, flex: 1, padding: 0 }}
         placeholder={placeholder}
         value={inputValue}
+        size="small"
         onChange={handleInputChange}
-        inputProps={{ 'aria-label': 'search google maps' }}
       />
       <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
         <SearchIcon />
