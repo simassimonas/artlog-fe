@@ -1,0 +1,6 @@
+projectKey=artlog-fe
+serverUrl=http://localhost:9000
+serverVersion=10.0.0.68432
+dashboardUrl=http://localhost:9000/dashboard?id=artlog-fe
+ceTaskId=AYhDn2IVrhE31QN7MiKw
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYhDn2IVrhE31QN7MiKw

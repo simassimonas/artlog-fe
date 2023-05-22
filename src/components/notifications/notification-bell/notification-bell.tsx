@@ -14,15 +14,6 @@ const NotificationBell = () => {
     setUnseenNotificationsCount(count);
   };
 
-  const handleOpen = (event: any) => {
-    setAnchorEl(event.currentTarget);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleToggle = (event: any) => {
     setAnchorEl(event.currentTarget);
     setOpen((prevOpen) => !prevOpen);

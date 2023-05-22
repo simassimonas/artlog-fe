@@ -1,12 +1,9 @@
 import './friendship-button.scss';
 import { AuthContext } from '../../context/auth.context';
 import { useContext, useState, useEffect } from 'react';
-import { IUser } from '../../common/interfaces/user.interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { axiosRequest } from '../../common/utils';
 import { EFriendshipResponse } from '../../common/enums/friendship-response.enum';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 import ClearIcon from '@mui/icons-material/Clear';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
@@ -14,10 +11,12 @@ import { EFriendshipStatus } from '../../common/enums/friendship-status.enum';
 
 interface FriendshipButtonProps {
   profileId: string;
+  onStatusChange: (status: EFriendshipStatus) => void;
 }
 
 const FiendshipButton = ({
   profileId,
+  onStatusChange,
 }: FriendshipButtonProps): React.ReactElement | null => {
   const { loggedInUser } = useContext(AuthContext);
   const isOwnProfile = loggedInUser?._id === profileId;
@@ -69,6 +68,7 @@ const FiendshipButton = ({
 
   useEffect(() => {
     setIsSender(loggedInUser?._id === friendshipStatus?.senderId?._id);
+    onStatusChange(friendshipStatus?.status);
   }, [friendshipStatus]);
 
   useEffect(() => {
@@ -86,19 +86,19 @@ const FiendshipButton = ({
   if (isOwnProfile) return null;
 
   const handleAddFriend = async () => {
-    await sendFriendRequest.mutate();
+    sendFriendRequest.mutate();
   };
 
   const handleCancelRequest = async () => {
-    await respondToFriendRequest.mutate(EFriendshipResponse.CANCEL);
+    respondToFriendRequest.mutate(EFriendshipResponse.CANCEL);
   };
 
   const handleAcceptRequest = async () => {
-    await respondToFriendRequest.mutate(EFriendshipResponse.ACCEPT);
+    respondToFriendRequest.mutate(EFriendshipResponse.ACCEPT);
   };
 
   const handleDeclineRequest = async () => {
-    await respondToFriendRequest.mutate(EFriendshipResponse.DECLINE);
+    respondToFriendRequest.mutate(EFriendshipResponse.DECLINE);
   };
 
   const handleRemoveFriend = async () => {

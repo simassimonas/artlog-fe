@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { IComment } from '../../common/interfaces/comment.interface';
-import { IUser } from '../../common/interfaces/user.interface';
 import './comments.scss';
 import { AuthContext } from '../../context/auth.context';
 import defaultProfileImg from '../../assets/default-profile.png';

@@ -1,22 +1,10 @@
-import React, {
-  MouseEvent,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { MouseEvent, useContext, useEffect, useRef, useState } from 'react';
 import Menu from '@mui/material/Menu';
 import { INotification } from '../../../common/interfaces/notification.interface';
 import Notification from '../notification/notification';
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { axiosRequest } from '../../../common/utils';
 import { CircularProgress, MenuItem, useMediaQuery } from '@mui/material';
-import { InView } from 'react-intersection-observer';
 import './notifications-list.scss';
 import { SocketContext } from '../../../context/socket.context';
 import { toast } from 'react-toastify';
@@ -60,34 +48,18 @@ const NotificationsList = ({
     }
   }, [unseenNotificationsCount]);
 
-  const {
-    isLoading,
-    error,
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery(
-    ['notifications'],
-    async ({ pageParam = 0 }) => {
-      const res = await axiosRequest.get(
-        `/notifications?page=${pageParam}&limit=${limit}`
-      );
-      return res.data;
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['notifications'],
+    queryFn: () =>
+      axiosRequest.get('/notifications?unseen=true').then((res) => {
+        return res.data;
+      }),
+    onSuccess: (data) => {
+      setAllNotifications(data);
     },
-    {
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-      onSuccess: (data) => {
-        markSeenNotifications();
-      },
-    }
-  );
+  });
 
-  const observerCallback = (inView: boolean) => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  };
+  useEffect(() => {}, [data]);
 
   useEffect(() => {
     notificationsSocket?.on('notification', (notification: INotification) => {
@@ -97,15 +69,15 @@ const NotificationsList = ({
         });
       }
 
+      setAllNotifications((prevAllNotifications) => [
+        notification,
+        ...prevAllNotifications,
+      ]);
+
       if (openRef.current) {
         updateNotificationsMutation.mutate([notification._id]);
       } else {
         queryClient.invalidateQueries(['unseenNotificationsCount']);
-
-        setAllNotifications((prevAllNotifications) => [
-          notification,
-          ...prevAllNotifications,
-        ]);
       }
     });
 
@@ -113,16 +85,6 @@ const NotificationsList = ({
       notificationsSocket?.off('notification');
     };
   }, [notificationsSocket]);
-
-  useEffect(() => {
-    if (data) {
-      const fetchedNotifications = data.pages.flatMap(
-        (pageData) => pageData.notifications
-      );
-      setAllNotifications(fetchedNotifications);
-      markSeenNotifications();
-    }
-  }, [data]);
 
   const updateNotifications = async (notificationIds: string[]) => {
     const updatePromises = notificationIds.map((notificationId) =>
@@ -133,7 +95,6 @@ const NotificationsList = ({
 
   const updateNotificationsMutation = useMutation(updateNotifications, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['notifications']);
       queryClient.invalidateQueries(['unseenNotificationsCount']);
     },
   });
@@ -203,10 +164,6 @@ const NotificationsList = ({
             </MenuItem>
           ))
         )}
-        {isFetchingNextPage && <CircularProgress />}
-        <InView onChange={observerCallback} threshold={1}>
-          <div style={{ height: 1 }}></div>
-        </InView>
       </div>
     </Menu>
   );

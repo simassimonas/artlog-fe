@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './art-list.scss';
 import { useInfiniteQuery } from '@tanstack/react-query';

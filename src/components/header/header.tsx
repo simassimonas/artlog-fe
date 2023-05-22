@@ -4,16 +4,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import SearchBar from '../search-bar/search-bar';
 import { AuthContext } from '../../context/auth.context';
 import { Fragment, useContext, useState } from 'react';
-import LogoutIcon from '@mui/icons-material/Logout';
 import defaultProfileImg from '../../assets/default-profile.png';
 import artlogLogo from '../../assets/artlog-logo.png';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CreateIcon from '@mui/icons-material/Create';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import NotificationBell from '../notifications/notification-bell/notification-bell';
-import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
-import { IconButton, Drawer, List, ListItem } from '@mui/material';
+import {
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  useMediaQuery,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = () => {

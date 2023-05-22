@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './search-bar.scss';
 import SearchIcon from '@mui/icons-material/Search';
 import Paper from '@mui/material/Paper';

@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import './comment.scss';
-import { Link } from 'react-router-dom';
 import defaultProfileImg from '../../assets/default-profile.png';
 import { AuthContext } from '../../context/auth.context';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -38,8 +37,6 @@ export const Comment = ({ comment }: { comment: IComment }) => {
 
   const deleteMutation = useMutation(
     () => {
-      console.log('comment.content', comment.content);
-      console.log('comment._id', comment._id);
       return axiosRequest.delete(
         `/posts/${comment.postId}/comments/${comment._id}`
       );

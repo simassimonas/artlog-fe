@@ -165,11 +165,7 @@ export const Post = ({ post }: { post: IPost }) => {
       <div className="post__feedback">
         <div className="post__feedback-item">
           {postLiked ? (
-            <FavoriteOutlinedIcon
-              //style={{ color: 'red' }}
-              color="primary"
-              onClick={handleLike}
-            />
+            <FavoriteOutlinedIcon color="primary" onClick={handleLike} />
           ) : (
             <FavoriteBorderOutlinedIcon onClick={handleLike} />
           )}

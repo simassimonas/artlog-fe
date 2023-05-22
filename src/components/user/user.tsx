@@ -1,4 +1,3 @@
-import React, { useContext, useState } from 'react';
 import './user.scss';
 import { IUser } from '../../common/interfaces/user.interface';
 import { Link } from 'react-router-dom';

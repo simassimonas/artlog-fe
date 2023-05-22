@@ -4,25 +4,21 @@ import {
   CircularProgress,
   IconButton,
   InputAdornment,
-  MenuItem,
   Popover,
   TextField,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { axiosRequest, useDebounce } from '../../../common/utils';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import User from '../../user/user';
 import { InView } from 'react-intersection-observer';
 import { IUser } from '../../../common/interfaces/user.interface';
 import Conversation from '../conversation/conversation';
-import Menu from '@mui/material/Menu';
 import { useParams } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Conversations = ({ limit = 20, onSelectUser }: any) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const userIdParam: string | undefined = useParams().id;
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, 600);

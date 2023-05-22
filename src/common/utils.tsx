@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../context/auth.context';
+import { useEffect, useState } from 'react';
 
 export const getJsonParsedLocalStorageItem = (key: string): any | null => {
   const item = localStorage.getItem(key);

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './register.scss';
@@ -85,7 +84,7 @@ const Register = () => {
           />
           <input
             type="password"
-            placeholder="Password (min length 3)"
+            placeholder="Password (min length 8)"
             maxLength={20}
             name="password"
             onChange={handleChange}

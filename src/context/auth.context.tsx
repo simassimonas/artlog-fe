@@ -6,7 +6,6 @@ import {
   delay,
   getJsonParsedLocalStorageItem,
 } from '../common/utils';
-import { useContext } from 'react';
 
 export interface IUserContextInterface {
   loggedInUser: IUser | null;
@@ -54,7 +53,7 @@ export const AuthContextProvider = ({ children }: UserProvideProps) => {
 
   const logout = async () => {
     setLoggedInUser(null);
-    const res = await axiosRequest.get('/auth/logout');
+    await axiosRequest.get('/auth/logout');
   };
 
   useEffect(() => {

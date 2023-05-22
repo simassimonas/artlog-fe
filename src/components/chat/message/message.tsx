@@ -1,4 +1,3 @@
-import React from 'react';
 import './message.scss';
 import moment from 'moment';
 import { IMessage } from '../../../common/interfaces/message.interface';

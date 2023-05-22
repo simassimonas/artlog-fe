@@ -1,8 +1,5 @@
-import axios from 'axios';
-import { useContext, useState } from 'react';
-import { IArt } from '../../common/interfaces/art.interface';
+import { useContext } from 'react';
 import ArtGeneratorInput from '../../components/art/art-generator/art-generator-input';
-import ArtToPost from '../../components/art/art-to-post/art-to-post';
 import { AuthContext } from '../../context/auth.context';
 import './posting.scss';
 import ArtList from '../../components/art/art-list/art-list';

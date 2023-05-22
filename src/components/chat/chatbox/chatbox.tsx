@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './chatbox.scss';
 import Message from '../message/message';
 import { CircularProgress, IconButton, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { AnyAaaaRecord } from 'dns';
 import { IUser } from '../../../common/interfaces/user.interface';
 import {
   useInfiniteQuery,
@@ -15,7 +14,6 @@ import { IMessage } from '../../../common/interfaces/message.interface';
 import { AuthContext } from '../../../context/auth.context';
 import { SocketContext } from '../../../context/socket.context';
 import { InView } from 'react-intersection-observer';
-import Conversation from '../conversation/conversation';
 
 const ChatBox = ({ user }: { user: IUser | null }) => {
   const queryClient = useQueryClient();
@@ -25,7 +23,6 @@ const ChatBox = ({ user }: { user: IUser | null }) => {
   const [allMessages, setAllMessages] = useState<IMessage[]>([]);
   const [shouldScrollToTheBottom, setShouldScrollToTheBottom] = useState(false);
   const [queryUser, setQueryUser] = useState(user);
-  //const openRef = useRef(open);
   const scrollRef = useRef<null | HTMLDivElement>(null);
   const limit = 10;
 
@@ -38,32 +35,23 @@ const ChatBox = ({ user }: { user: IUser | null }) => {
     setQueryUser(user);
   }, [user]);
 
-  const {
-    isLoading,
-    error,
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery(
-    ['messages', queryUser],
-    async ({ pageParam = null }) => {
-      const res = await axiosRequest.get(
-        `/messages/conversations/${user?._id}?lastMessageId=${pageParam}&limit=${limit}`
-      );
-      return res.data;
-    },
-    {
-      getNextPageParam: (lastPage) =>
-        lastPage.messages[lastPage.messages.length - 1]?._id,
-      onSuccess: (data) => {},
-    }
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(
+      ['messages', queryUser],
+      async ({ pageParam = null }) => {
+        const res = await axiosRequest.get(
+          `/messages/conversations/${user?._id}?lastMessageId=${pageParam}&limit=${limit}`
+        );
+        return res.data;
+      },
+      {
+        getNextPageParam: (lastPage) =>
+          lastPage.messages[lastPage.messages.length - 1]?._id,
+      }
+    );
 
   useEffect(() => {
     messagesSocket?.on('message', (message: IMessage) => {
-      console.log('message.from._id', message.from._id);
-      console.log('user?._id', user?._id);
       if (message.from._id == user?._id) {
         setAllMessages((prevAllMessages) => [...prevAllMessages, message]);
         setShouldScrollToTheBottom(true);

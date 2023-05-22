@@ -1,9 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
 import './post-page.scss';
 import { useQuery } from '@tanstack/react-query';
 import { axiosRequest } from '../../common/utils';
 import CircularProgress from '@mui/material/CircularProgress';
-import { InView } from 'react-intersection-observer';
 import { useParams } from 'react-router-dom';
 import Post from '../../components/post/post';
 

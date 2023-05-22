@@ -1,8 +1,5 @@
 import './art.scss';
 import { IArt } from '../../../common/interfaces/art.interface';
-import Modal from '@mui/material/Modal';
-import { useState } from 'react';
-import ArtToPost from '../art-to-post/art-to-post';
 
 const Art = ({ art }: { art: IArt }) => {
   return (

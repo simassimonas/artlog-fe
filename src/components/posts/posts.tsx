@@ -1,13 +1,6 @@
-import React, { useState, useCallback, useEffect } from 'react';
 import './posts.scss';
-import { IUser } from '../../common/interfaces/user.interface';
-import { IPost } from '../../common/interfaces/post.interface';
 import Post from '../post/post';
-import {
-  useInfiniteQuery,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { axiosRequest } from '../../common/utils';
 import CircularProgress from '@mui/material/CircularProgress';
 import { InView } from 'react-intersection-observer';

@@ -4,9 +4,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import Posts from '../../components/posts/posts';
-import { useQueryClient } from '@tanstack/react-query';
 import Users from '../../components/users/users';
 import './search.scss';
 
@@ -44,13 +42,8 @@ function a11yProps(index: number) {
 }
 
 const Search = () => {
-  const queryClient = useQueryClient();
   const [value, setValue] = React.useState(0);
   const query = new URLSearchParams(useLocation().search).get('query');
-
-  useEffect(() => {
-    //queryClient.invalidateQueries(['posts', 'search']);
-  }, [query]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

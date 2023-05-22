@@ -1,7 +1,4 @@
-import axios from 'axios';
-import { useContext, useState } from 'react';
-import ArtGeneratorInput from '../art-generator/art-generator-input';
-import { AuthContext } from '../../../context/auth.context';
+import { useState } from 'react';
 import './art-to-post.scss';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -16,7 +13,6 @@ export interface Tag {
 
 const ArtToPost = ({ art, closeModal }: any) => {
   const queryClient = useQueryClient();
-  const [prompt, setPrompt] = useState('');
   const [tags, setTags] = useState<Tag[]>([]);
 
   // multiply by -1 to invert the sign since getTimezoneOffset() return value will be negative if ure ahead of UTC and vice versa

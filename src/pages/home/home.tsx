@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import Posts from '../../components/posts/posts';
 import './home.scss';
 

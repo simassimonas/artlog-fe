@@ -1,10 +1,7 @@
-import React, { useContext, useState } from 'react';
 import './notification.scss';
 import { Link } from 'react-router-dom';
 import defaultProfileImg from '../../../assets/default-profile.png';
-import { axiosRequest } from '../../../common/utils';
 import { INotification } from '../../../common/interfaces/notification.interface';
-import { useQueryClient } from '@tanstack/react-query';
 import { ENotificationType } from '../../../common/enums/notification-type.enum';
 import moment from 'moment';
 
@@ -32,7 +29,7 @@ export const Notification = ({
   return (
     <Link
       className={`notification${
-        notification?.isSeen ? '' : ' notification--active'
+        notification?.isSeen ? ' notification--active' : ''
       }`}
       to={`posts/${notification?.refId}`}
       style={{ textDecoration: 'none', color: 'inherit' }}

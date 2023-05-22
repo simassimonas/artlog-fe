@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../context/auth.context';
 import './art-generator-input.scss';
@@ -13,11 +12,7 @@ const ArtGeneratorInput = ({ initialValue = '', placeholder }: any) => {
   const { loggedInUser } = useContext(AuthContext);
   const [prompt, setPrompt] = useState('');
 
-  const {
-    isLoading,
-    error: userError,
-    data: userData,
-  } = useQuery({
+  const { data: userData } = useQuery({
     queryKey: ['user', loggedInUser?._id],
     queryFn: () =>
       axiosRequest.get('/users/' + loggedInUser?._id).then((res) => {
