@@ -60,15 +60,15 @@ React client  <--HTTP + WebSocket-->  NestJS API  <-->  MongoDB
 
 **Main feed on mobile:** the same feed in the responsive mobile layout.
 
-<img src="screenshots/main%20feed%20page%20mobile.png" alt="Main feed on mobile" width="50%">
+<img src="screenshots/main%20feed%20page%20mobile.png" alt="Main feed on mobile" width="265">
 
 **Image generation:** write a prompt, spend a credit, and pick a generated image to post.
 
-<img src="screenshots/art%20gen%20page.png" alt="Image generation page" width="50%">
+<img src="screenshots/art%20gen%20page.png" alt="Image generation page" width="240">
 
 **Notifications:** real-time likes and comments on a user's posts.
 
-<img src="screenshots/notifications.png" alt="Notifications" width="50%">
+<img src="screenshots/notifications.png" alt="Notifications" width="250">
 
 **Chat:** real-time messaging with friends and public users.
 
@@ -76,4 +76,4 @@ React client  <--HTTP + WebSocket-->  NestJS API  <-->  MongoDB
 
 **Login:** the login page.
 
-<img src="screenshots/login.png" alt="Login" width="50%">
+<img src="screenshots/login.png" alt="Login" width="230">
