@@ -54,26 +54,32 @@ React client  <--HTTP + WebSocket-->  NestJS API  <-->  MongoDB
 
 ## Screenshots
 
-**Main feed:** posts from a user and their friends, with likes and comments.
+**Login:** the login page.
 
-<img src="screenshots/main%20feed%20page.png" alt="Main feed" width="50%">
+<img src="screenshots/login.png" alt="Login" width="230">
 
-**Main feed on mobile:** the same feed in the responsive mobile layout.
+
+**Main feed on mobile:** posts from a user and their friends, with likes and comments .
 
 <img src="screenshots/main%20feed%20page%20mobile.png" alt="Main feed on mobile" width="265">
+
+
+**Main feed:** the same feed in the web layout.
+
+<img src="screenshots/main%20feed%20page.png" alt="Main feed" width="65%">
+
 
 **Image generation:** write a prompt, spend a credit, and pick a generated image to post.
 
 <img src="screenshots/art%20gen%20page.png" alt="Image generation page" width="240">
 
+
 **Notifications:** real-time likes and comments on a user's posts.
 
 <img src="screenshots/notifications.png" alt="Notifications" width="250">
 
+
 **Chat:** real-time messaging with friends and public users.
 
-<img src="screenshots/chat%20.png" alt="Chat" width="50%">
+<img src="screenshots/chat%20.png" alt="Chat" width="65%">
 
-**Login:** the login page.
-
-<img src="screenshots/login.png" alt="Login" width="230">
