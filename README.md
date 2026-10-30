@@ -1,46 +1,79 @@
-# Getting Started with Create React App
+# ArtLog (frontend)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ArtLog is a small social network that works like a shared daily diary. Instead of writing text, people describe their day, their mood, something that happened to them or something they dreamed about. An AI image generator turns that description into a picture, which they share as a post. Each person can post only once per day, and friends can like, comment on and talk about each other's posts.
 
-## Available Scripts
+I built it as a personal learning project, to practice the core parts of a full-stack web app in one place. That includes authentication, a document database, REST APIs, real-time communication with WebSockets, file uploads, scheduled jobs, pagination and a responsive UI. On the product side, it has the features you'd expect from a social network: a feed, friends, likes and comments, search, live notifications and one-to-one chat.
 
-In the project directory, you can run:
+This repository is the React client. The API lives in the separate `artlog-be` repository.
 
-### `npm start`
+## Running locally
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Make sure the backend from `artlog-be` is running.
+2. Run `npm install`.
+3. Create a `.env` file and set `REACT_APP_API` to the backend URL, for example `http://localhost:4200`. There are a few more optional environment values for things like credit limits and hashtag length.
+4. Run `npm start`. The app opens on `http://localhost:3000`.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## What the app does
 
-### `npm test`
+- **Accounts:** people can sign up, log in and log out.
+- **Image generation:** people write a prompt and get an AI-generated image. Each generation costs 1 credit. New users start with some credits, everyone gets 3 free credits every day, and the balance is capped at 30.
+- **One post per day:** users pick one of their generated images, add hashtags and publish it. Each user can post only once per calendar day in their own time zone. A user who changes time zones has to wait 24 hours since their last post, so switching zones can't be used to post twice.
+- **Feed:** shows a user's own posts and their friends' posts, newest first, with infinite scroll.
+- **Interactions:** people can like and comment on posts, like comments, and delete their own comments and posts.
+- **Search:** find posts by hashtag and people by name or username.
+- **Friends:** send, cancel, accept and remove friend requests.
+- **Profiles and privacy:** users have profiles with a profile picture and can make their account public or private. Only friends can see a private user's posts or message them.
+- **Notifications:** users get real-time notifications when someone likes or comments on their post. The header shows an unread count, and missed notifications load when the app opens.
+- **Chat:** real-time one-to-one messaging with full message history.
+- **Responsive UI:** works on desktop, tablet and mobile, in Chrome, Safari, Edge and Firefox.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How it works
 
-### `npm run build`
+The app uses a simple client-server setup:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+React client  <--HTTP + WebSocket-->  NestJS API  <-->  MongoDB
+                                           |
+                                           +-->  Stable Diffusion API
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Client:** a single-page React app. It calls the API over HTTP and keeps a Socket.IO connection open for notifications and chat.
+- **Server:** a NestJS app that handles business logic and data. It talks to MongoDB and to the image generation API.
+- **Database:** MongoDB, accessed through Mongoose.
+- **Image generation:** a Stable Diffusion model exposed through an HTTP API, hosted on Google Colab.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Tech stack
 
-### `npm run eject`
+**Frontend:** React 18, TypeScript, React Router, TanStack React Query, Axios, Socket.IO client, MUI, SASS/SCSS, React Toastify
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**Backend:** NestJS, TypeScript, MongoDB with Mongoose, Passport (JWT and local strategies), bcrypt, Socket.IO, @nestjs/schedule (cron), class-validator
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Image generation:** Stable Diffusion via the `diffusers` library, hosted on Google Colab
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**Tooling:** SonarQube, ESLint, Prettier, Jest
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Screenshots
 
-## Learn More
+**Main feed:** posts from a user and their friends, with likes and comments.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Main feed](screenshots/main%20feed%20page.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Main feed on mobile:** the same feed in the responsive mobile layout.
+
+![Main feed on mobile](screenshots/main%20feed%20page%20mobile.png)
+
+**Image generation:** write a prompt, spend a credit, and pick a generated image to post.
+
+![Image generation page](screenshots/art%20gen%20page.png)
+
+**Notifications:** real-time likes and comments on a user's posts.
+
+![Notifications](screenshots/notifications.png)
+
+**Chat:** real-time messaging with friends and public users.
+
+![Chat](screenshots/chat%20.png)
+
+**Login:** the login page.
+
+![Login](screenshots/login.png)
