@@ -4,7 +4,7 @@ ArtLog is a small social network that works like a shared daily diary. Instead o
 
 I built it as a personal learning project, to practice the core parts of a full-stack web app in one place. That includes authentication, a document database, REST APIs, real-time communication with WebSockets, file uploads, scheduled jobs, pagination and a responsive UI. On the product side, it has the features you'd expect from a social network: a feed, friends, likes and comments, search, live notifications and one-to-one chat.
 
-This repository is the React client. The API lives in the separate `artlog-be` repository.
+This repository is the React client. The API lives in the separate `artlog-be` repository..
 
 ## Running locally
 
